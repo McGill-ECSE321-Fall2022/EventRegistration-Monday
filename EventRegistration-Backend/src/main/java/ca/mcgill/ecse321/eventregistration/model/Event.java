@@ -3,7 +3,12 @@ package ca.mcgill.ecse321.eventregistration.model;
 import java.sql.Date;
 import java.sql.Time;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Event {
+	@Id
 	private String name;
 	private Date eventDate;
 	private Time startTime;
