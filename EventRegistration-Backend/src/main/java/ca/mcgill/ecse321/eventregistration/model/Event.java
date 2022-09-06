@@ -1,0 +1,43 @@
+package ca.mcgill.ecse321.eventregistration.model;
+
+import java.sql.Date;
+import java.sql.Time;
+
+public class Event {
+	private String name;
+	private Date eventDate;
+	private Time startTime;
+	private Time endTime;
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public Date getEventDate() {
+		return this.eventDate;
+	}
+	
+	public Time getStartTime() {
+		return this.startTime;
+	}
+	
+	public Time getEndTime() {
+		return this.endTime;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public void setEventDate(Date date) {
+		this.eventDate = date;
+	}
+	
+	public void setStartTime(Time time) {
+		this.startTime = time;
+	}
+	
+	public void setEndTime(Time time) {
+		this.endTime = time;
+	}
+}
