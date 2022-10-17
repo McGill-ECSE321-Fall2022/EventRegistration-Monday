@@ -12,7 +12,7 @@ public class Registration {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	@ManyToOne(optional = false)
-	private Person participant;
+	private User participant;
 	@ManyToOne(optional = false)
 	private Event event;
 	
@@ -20,7 +20,7 @@ public class Registration {
 		return this.id;
 	}
 	
-	public Person getParticipant() {
+	public User getParticipant() {
 		return this.participant;
 	}
 	
@@ -30,7 +30,7 @@ public class Registration {
 	
 	// No need for a setter for id because the database can generate it automatically
 	
-	public void setParticipant(Person person) {
+	public void setParticipant(User person) {
 		this.participant = person;
 	}
 	

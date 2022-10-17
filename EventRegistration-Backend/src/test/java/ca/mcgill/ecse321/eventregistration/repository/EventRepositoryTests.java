@@ -42,7 +42,7 @@ public class EventRepositoryTests {
 		
 		event = null;
 		
-		event = eventRepository.findEventByName(name);
+		event = eventRepository.findEventByEventName(name);
 		
 		assertNotNull(event);
 		assertEquals(name, event.getName());

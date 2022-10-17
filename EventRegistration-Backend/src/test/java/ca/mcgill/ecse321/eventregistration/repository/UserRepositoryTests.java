@@ -10,13 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import ca.mcgill.ecse321.eventregistration.model.Person;
+import ca.mcgill.ecse321.eventregistration.model.User;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class PersonRepositoryTests {
+public class UserRepositoryTests {
 	@Autowired
-	private PersonRepository personRepository;
+	private UserRepository personRepository;
 	
 	@AfterEach
 	public void clearDatabase() {
@@ -26,18 +26,18 @@ public class PersonRepositoryTests {
 	@Test
 	public void testPersistAndLoadPerson() {
 		String name = "Anakin Skywalker";
-		Person person = new Person();
-		person.setName(name);
+		User anakin = new User();
+		anakin.setName(name);
 		
-		person = personRepository.save(person);
-		int id = person.getId();
+		anakin = personRepository.save(anakin);
+		int id = anakin.getId();
 		
-		person = null;
+		anakin = null;
 		
-		person = personRepository.findPersonById(id);
+		anakin = personRepository.findUserById(id);
 		
-		assertNotNull(person);
-		assertEquals(id, person.getId());
-		assertEquals(name, person.getName());
+		assertNotNull(anakin);
+		assertEquals(id, anakin.getId());
+		assertEquals(name, anakin.getName());
 	}
 }

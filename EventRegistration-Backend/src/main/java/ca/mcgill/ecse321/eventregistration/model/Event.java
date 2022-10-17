@@ -8,7 +8,6 @@ import javax.persistence.Id;
 
 @Entity
 public class Event {
-	@Id
 	private String name;
 	private Date eventDate;
 	private Time startTime;

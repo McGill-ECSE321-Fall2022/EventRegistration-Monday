@@ -14,14 +14,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ca.mcgill.ecse321.eventregistration.model.Event;
-import ca.mcgill.ecse321.eventregistration.model.Person;
+import ca.mcgill.ecse321.eventregistration.model.User;
 import ca.mcgill.ecse321.eventregistration.model.Registration;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class RegistrationRepositoryTests {
 	@Autowired
-	private PersonRepository personRepository;
+	private UserRepository personRepository;
 	@Autowired
 	private EventRepository eventRepository;
 	@Autowired
@@ -51,7 +51,7 @@ public class RegistrationRepositoryTests {
 		eventRepository.save(event);
 		
 		String participantName = "Anakin Skywalker";
-		Person participant = new Person();
+		User participant = new User();
 		participant.setName(participantName);
 		participant = personRepository.save(participant);
 		int participantId = participant.getId();
