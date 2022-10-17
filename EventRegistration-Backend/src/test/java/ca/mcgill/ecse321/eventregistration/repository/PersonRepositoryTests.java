@@ -12,7 +12,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ca.mcgill.ecse321.eventregistration.model.Person;
 
-@ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class PersonRepositoryTests {
 	@Autowired
