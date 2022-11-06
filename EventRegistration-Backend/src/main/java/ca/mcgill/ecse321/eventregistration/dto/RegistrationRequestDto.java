@@ -1,8 +1,15 @@
 package ca.mcgill.ecse321.eventregistration.dto;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class RegistrationRequestDto {
 
+	@Min(1)
 	private int participantId;
+	@NotNull
+	@NotBlank
 	private String eventName;
 	
 	public int getParticipantId() {

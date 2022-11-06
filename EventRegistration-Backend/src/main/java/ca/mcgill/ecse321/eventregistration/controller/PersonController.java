@@ -1,5 +1,7 @@
 package ca.mcgill.ecse321.eventregistration.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +33,7 @@ public class PersonController {
 	 * property to avoid this.
 	 */
 	@PostMapping("/person")
-	public ResponseEntity<PersonDto> createPerson(@RequestBody Person person) {
+	public ResponseEntity<PersonDto> createPerson(@Valid @RequestBody Person person) {
 		person = personService.createPerson(person);
 		return new ResponseEntity<PersonDto>(new PersonDto(person), HttpStatus.CREATED);
 	}
