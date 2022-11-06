@@ -1,0 +1,613 @@
+{
+	"info": {
+		"_postman_id": "e416cdc5-abf1-48ea-abcd-87ed3ccfefc3",
+		"name": "EventRegistration-Backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15548363"
+	},
+	"item": [
+		{
+			"name": "Person",
+			"item": [
+				{
+					"name": "POST /person",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"const jsonData = pm.response.json();\r",
+									"pm.test(\"Person has correct name\", function () {\r",
+									"    pm.expect(jsonData.name).to.eql(\"Obi-Wan Kenobi\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Person has ID\", function () {\r",
+									"    pm.expect(jsonData.id).to.above(0);\r",
+									"})\r",
+									"\r",
+									"pm.collectionVariables.set(\"participant_id\", jsonData.id);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Obi-Wan Kenobi\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/person",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"person"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /person (blank name)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"  \"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/person",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"person"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /person/{id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const jsonData = pm.response.json();\r",
+									"pm.test(\"Person has correct ID\", function () {\r",
+									"    pm.expect(jsonData.id).to.eql(+pm.collectionVariables.get(\"participant_id\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Person has correct name\", function () {\r",
+									"    pm.expect(jsonData.name).to.eql(\"Obi-Wan Kenobi\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/person/{{participant_id}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"person",
+								"{{participant_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /person/{id} (invalid ID)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Error message includes 'Person not found.'\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Person not found.\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/person/2000000000",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"person",
+								"2000000000"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Event",
+			"item": [
+				{
+					"name": "POST /event",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const uuid = require(\"uuid\");\r",
+									"\r",
+									"pm.collectionVariables.set(\"event_name\", uuid.v4());\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"const jsonData = pm.response.json();\r",
+									"pm.test(\"Event has correct name\", function () {\r",
+									"    pm.expect(jsonData.name).to.eql(pm.collectionVariables.get(\"event_name\"));\r",
+									"});\r",
+									"\r",
+									"// Test the date, start time, and end time as well...\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{event_name}}\",\r\n    \"eventDate\": \"2022-11-06\",\r\n    \"startTime\": \"13:00:00\",\r\n    \"endTime\": \"17:00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/event",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"event"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /event (duplicate name)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 409\", function () {\r",
+									"    pm.response.to.have.status(409);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Error message is correct\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"An event with the given name already exists.\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{event_name}}\",\r\n    \"eventDate\": \"2022-11-06\",\r\n    \"startTime\": \"13:00:00\",\r\n    \"endTime\": \"17:00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/event",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"event"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /event/{name}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const jsonData = pm.response.json();\r",
+									"pm.test(\"Event has correct name\", function () {\r",
+									"    pm.expect(jsonData.name).to.eql(pm.collectionVariables.get(\"event_name\"));\r",
+									"});\r",
+									"\r",
+									"// Test the date, start time, and end time as well...\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/event/{{event_name}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"event",
+								"{{event_name}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /event/{name} (invalid name)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Error message is correct\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Event not found.\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/event/{{$guid}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"event",
+								"{{$guid}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Registration",
+			"item": [
+				{
+					"name": "POST /registration",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"const jsonData = pm.response.json();\r",
+									"pm.test(\"Registration has correct participant details\", function () {\r",
+									"    const expected_participant = {\r",
+									"        id: +pm.collectionVariables.get(\"participant_id\"),\r",
+									"        name: \"Obi-Wan Kenobi\"\r",
+									"    };\r",
+									"    pm.expect(jsonData.participant).to.eql(expected_participant);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Registration has correct event name\", function () {\r",
+									"    pm.expect(jsonData.event.name).to.eql(pm.collectionVariables.get(\"event_name\"));\r",
+									"    // TODO: Also check date, start time, end time\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Registration has ID\", function () {\r",
+									"    pm.expect(jsonData.id).to.above(0);\r",
+									"});\r",
+									"\r",
+									"pm.collectionVariables.set(\"registration_id\", jsonData.id);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"participantId\": {{participant_id}},\r\n    \"eventName\": \"{{event_name}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/registration",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /registration (invalid event name)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Error message is correct\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Event not found.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"participantId\": {{participant_id}},\r\n    \"eventName\": \"{{$guid}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/registration",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /registration/{id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const jsonData = pm.response.json();\r",
+									"pm.test(\"Registration has correct participant details\", function () {\r",
+									"    const expected_participant = {\r",
+									"        id: +pm.collectionVariables.get(\"participant_id\"),\r",
+									"        name: \"Obi-Wan Kenobi\"\r",
+									"    };\r",
+									"    pm.expect(jsonData.participant).to.eql(expected_participant);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Registration has correct event name\", function () {\r",
+									"    pm.expect(jsonData.event.name).to.eql(pm.collectionVariables.get(\"event_name\"));\r",
+									"    // TODO: Also check date, start time, end time\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Registration has ID\", function () {\r",
+									"    pm.expect(jsonData.id).to.above(0);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/registration/{{registration_id}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"registration",
+								"{{registration_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /registration/{id} (invalid ID)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Error message is correct\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Registration not found.\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/registration/2000000000",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"registration",
+								"2000000000"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "http://localhost:8080"
+		},
+		{
+			"key": "PARTICIPANT_NAME",
+			"value": "Obi-Wan Kenobi",
+			"type": "string"
+		},
+		{
+			"key": "participant_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "event_name",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "registration_id",
+			"value": ""
+		}
+	]
+}
