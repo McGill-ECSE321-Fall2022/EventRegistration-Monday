@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ca.mcgill.ecse321.eventregistration.dto.PersonDto;
 import ca.mcgill.ecse321.eventregistration.exception.EventRegistrationException;
 import ca.mcgill.ecse321.eventregistration.model.Person;
 import ca.mcgill.ecse321.eventregistration.repository.PersonRepository;
@@ -17,18 +16,17 @@ public class PersonService {
 	PersonRepository personRepo;
 	
 	@Transactional
-	public PersonDto getPersonById(int id) {
+	public Person getPersonById(int id) {
 		Person person = personRepo.findPersonById(id);
 		if (person == null) {
 			throw new EventRegistrationException(HttpStatus.NOT_FOUND, "Person not found.");
 		}
-		return new PersonDto(person);
+		return person;
 	}
 	
 	@Transactional
-	public PersonDto createPerson(Person person) {
+	public Person createPerson(Person person) {
 		person = personRepo.save(person);
-		return new PersonDto(person);
+		return person;
 	}
-	
 }

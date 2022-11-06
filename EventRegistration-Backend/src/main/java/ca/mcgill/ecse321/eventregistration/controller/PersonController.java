@@ -21,8 +21,8 @@ public class PersonController {
 
 	@GetMapping("/person/{id}")
 	public ResponseEntity<PersonDto> getPersonById(@PathVariable int id) {
-		PersonDto personDto = personService.getPersonById(id);
-		return new ResponseEntity<PersonDto>(personDto, HttpStatus.OK);
+		Person person = personService.getPersonById(id);
+		return new ResponseEntity<PersonDto>(new PersonDto(person), HttpStatus.OK);
 	}
 
 	/*
@@ -32,8 +32,7 @@ public class PersonController {
 	 */
 	@PostMapping("/person")
 	public ResponseEntity<PersonDto> createPerson(@RequestBody Person person) {
-		PersonDto personDto = personService.createPerson(person);
-		return new ResponseEntity<PersonDto>(personDto, HttpStatus.CREATED);
+		person = personService.createPerson(person);
+		return new ResponseEntity<PersonDto>(new PersonDto(person), HttpStatus.CREATED);
 	}
-
 }
