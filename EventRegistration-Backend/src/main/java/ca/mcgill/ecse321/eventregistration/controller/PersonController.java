@@ -1,6 +1,8 @@
 package ca.mcgill.ecse321.eventregistration.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,8 +20,9 @@ public class PersonController {
 	PersonService personService;
 
 	@GetMapping("/person/{id}")
-	public PersonDto getPersonById(@PathVariable int id) {
-		return personService.getPersonById(id);
+	public ResponseEntity<PersonDto> getPersonById(@PathVariable int id) {
+		PersonDto personDto = personService.getPersonById(id);
+		return new ResponseEntity<PersonDto>(personDto, HttpStatus.OK);
 	}
 
 	/*
@@ -28,8 +31,9 @@ public class PersonController {
 	 * property to avoid this.
 	 */
 	@PostMapping("/person")
-	public PersonDto createPerson(@RequestBody Person person) {
-		return personService.createPerson(person);
+	public ResponseEntity<PersonDto> createPerson(@RequestBody Person person) {
+		PersonDto personDto = personService.createPerson(person);
+		return new ResponseEntity<PersonDto>(personDto, HttpStatus.CREATED);
 	}
 
 }
