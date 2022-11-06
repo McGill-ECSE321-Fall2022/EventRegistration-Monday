@@ -16,6 +16,12 @@ public class Person {
 	@NotNull
 	private String name;
 	
+	public Person() {}
+	
+	public Person(String name) {
+		this.name = name;
+	}
+	
 	public Integer getId() {
 		return this.id;
 	}
