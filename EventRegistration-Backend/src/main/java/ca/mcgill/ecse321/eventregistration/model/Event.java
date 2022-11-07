@@ -5,14 +5,10 @@ import java.sql.Time;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Entity
 public class Event {
 	@Id
-	@NotNull
-	@NotBlank
 	private String name;
 	private Date eventDate;
 	private Time startTime;

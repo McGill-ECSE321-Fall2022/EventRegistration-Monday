@@ -6,24 +6,24 @@ public class RegistrationResponseDto {
 
 	private int id;
 	// IMPORTANT: Use DTOs here, not the model classes.
-	private PersonDto participant;
-	private EventDto event;
+	private PersonResponseDto participant;
+	private EventResponseDto event;
 
 	public RegistrationResponseDto(Registration registration) {
 		this.id = registration.getId();
-		this.participant = new PersonDto(registration.getParticipant());
-		this.event = new EventDto(registration.getEvent());
+		this.participant = new PersonResponseDto(registration.getParticipant());
+		this.event = new EventResponseDto(registration.getEvent());
 	}
 	
 	public int getId() {
 		return this.id;
 	}
 	
-	public PersonDto getParticipant() {
+	public PersonResponseDto getParticipant() {
 		return this.participant;
 	}
 	
-	public EventDto getEvent() {
+	public EventResponseDto getEvent() {
 		return this.event;
 	}
 }

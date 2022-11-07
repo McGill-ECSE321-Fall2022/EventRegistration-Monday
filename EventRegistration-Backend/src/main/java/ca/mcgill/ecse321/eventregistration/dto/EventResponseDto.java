@@ -5,14 +5,14 @@ import java.sql.Time;
 
 import ca.mcgill.ecse321.eventregistration.model.Event;
 
-public class EventDto {
+public class EventResponseDto {
 
 	private String name;
 	private Date eventDate;
 	private Time startTime;
 	private Time endTime;
 	
-	public EventDto(Event event) {
+	public EventResponseDto(Event event) {
 		this.name = event.getName();
 		this.eventDate = event.getEventDate();
 		this.startTime = event.getStartTime();
