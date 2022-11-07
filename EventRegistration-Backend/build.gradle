@@ -4,8 +4,8 @@ plugins {
 	id 'java'
 	// Code coverage tool
 	id 'jacoco'
-	// Postman tests
-	id 'com.github.michaelruocco.gradle-postman-runner' version '0.1.4'
+	// Postman tests (to run them, uncomment this and run gradle postman)
+	// id 'com.github.michaelruocco.gradle-postman-runner' version '0.1.4'
 }
 
 group = 'com.example'
