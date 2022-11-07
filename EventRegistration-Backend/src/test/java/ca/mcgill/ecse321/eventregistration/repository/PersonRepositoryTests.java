@@ -4,11 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ca.mcgill.ecse321.eventregistration.model.Person;
 
@@ -17,6 +16,7 @@ public class PersonRepositoryTests {
 	@Autowired
 	private PersonRepository personRepository;
 	
+	@BeforeEach
 	@AfterEach
 	public void clearDatabase() {
 		personRepository.deleteAll();
