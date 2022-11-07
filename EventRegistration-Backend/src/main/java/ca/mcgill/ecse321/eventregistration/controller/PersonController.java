@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import ca.mcgill.ecse321.eventregistration.dto.PersonDto;
+import ca.mcgill.ecse321.eventregistration.dto.PersonRequestDto;
+import ca.mcgill.ecse321.eventregistration.dto.PersonResponseDto;
 import ca.mcgill.ecse321.eventregistration.model.Person;
 import ca.mcgill.ecse321.eventregistration.service.PersonService;
 
@@ -22,19 +23,16 @@ public class PersonController {
 	PersonService personService;
 
 	@GetMapping("/person/{id}")
-	public ResponseEntity<PersonDto> getPersonById(@PathVariable int id) {
+	public ResponseEntity<PersonResponseDto> getPersonById(@PathVariable int id) {
 		Person person = personService.getPersonById(id);
-		return new ResponseEntity<PersonDto>(new PersonDto(person), HttpStatus.OK);
+		return new ResponseEntity<PersonResponseDto>(new PersonResponseDto(person), HttpStatus.OK);
 	}
 
-	/*
-	 * NOTE: if you specify an ID here then it will be accepted and cause unexpected
-	 * behaviour. You may want to define a CreatePersonRequestDto with no id
-	 * property to avoid this.
-	 */
 	@PostMapping("/person")
-	public ResponseEntity<PersonDto> createPerson(@Valid @RequestBody Person person) {
-		person = personService.createPerson(person);
-		return new ResponseEntity<PersonDto>(new PersonDto(person), HttpStatus.CREATED);
+	public ResponseEntity<PersonResponseDto> createPerson(@Valid @RequestBody PersonRequestDto request) {
+		Person personToCreate = request.toModel();
+		Person createdPerson = personService.createPerson(personToCreate);
+		PersonResponseDto response = new PersonResponseDto(createdPerson);
+		return new ResponseEntity<PersonResponseDto>(response, HttpStatus.CREATED);
 	}
 }
