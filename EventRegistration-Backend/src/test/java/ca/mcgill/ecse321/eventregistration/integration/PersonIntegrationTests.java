@@ -43,10 +43,10 @@ public class PersonIntegrationTests {
 		assertNotNull(response);
 		assertEquals(HttpStatus.CREATED, response.getStatusCode(), "Response has correct status");
 		assertNotNull(response.getBody(), "Response has body");
-		assertEquals("Obi-Wan Kenobi", response.getBody().name, "Response has correct name");
-		assertTrue(response.getBody().id > 0, "Response has valid ID");
+		assertEquals("Obi-Wan Kenobi", response.getBody().getName(), "Response has correct name");
+		assertTrue(response.getBody().getId() > 0, "Response has valid ID");
 		
-		return response.getBody().id;
+		return response.getBody().getId();
 	}
 	
 	private void testGetPerson(int id) {
@@ -55,8 +55,8 @@ public class PersonIntegrationTests {
 		assertNotNull(response);
 		assertEquals(HttpStatus.OK, response.getStatusCode(), "Response has correct status");
 		assertNotNull(response.getBody(), "Response has body");
-		assertEquals("Obi-Wan Kenobi", response.getBody().name, "Response has correct name");
-		assertTrue(response.getBody().id == id, "Response has correct ID");
+		assertEquals("Obi-Wan Kenobi", response.getBody().getName(), "Response has correct name");
+		assertTrue(response.getBody().getId() == id, "Response has correct ID");
 	}
 	
 	@Test
@@ -78,13 +78,21 @@ public class PersonIntegrationTests {
 }
 
 class PersonDto {
-	public int id;
-	public String name;
+	private int id;
+	private String name;
 	
 	// Need default constructor so that Jackson can instantiate the object
 	public PersonDto() {}
 	
 	public PersonDto(String name) {
 		this.name = name;
+	}
+
+	public int getId() {
+		return this.id;
+	}
+
+	public String getName() {
+		return this.name;
 	}
 }
