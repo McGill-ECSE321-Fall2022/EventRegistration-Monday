@@ -51,8 +51,6 @@ const axiosClient = axios.create({
   headers: { 'Access-Control-Allow-Origin': frontendUrl }
 })
 
-console.log(config.dev.backendBaseUrl)
-
 export default {
   name: 'Home',
   data() {
@@ -91,18 +89,36 @@ export default {
   },
   methods: {
     createUser: function(userName) {
-      const u = { id: this.nextId, name: userName }
-      this.users.push(u)
-      this.nextId++
-      this.newUserName = ''
+      axiosClient.post('/person', {
+        name: userName
+      })
+      .then(response => {
+        console.log(response)
+        this.users.push(response.data)
+        this.newUserName = ''
+      })
+      .catch(error => {
+        console.log(error)
+      })
     },
     createEvent: function(eventName, date, startTime, endTime) {
-      const e = { name: eventName, eventDate: date, startTime: startTime, endTime: endTime }
-      this.events.push(e)
-      this.newEventName = ''
-      this.newEventDate = ''
-      this.newEventStartTime = ''
-      this.newEventEndTime = ''
+      axiosClient.post('/event', {
+        name: eventName,
+        eventDate: date,
+        startTime: startTime,
+        endTime: endTime
+      })
+      .then(response => {
+        console.log(response)
+        this.events.push(response.data)
+        this.newEventName = ''
+        this.newEventDate = ''
+        this.newEventStartTime = ''
+        this.newEventEndTime = ''
+      })
+      .catch(error => {
+        console.log(error)
+      })      
     }
   },
   computed: {
