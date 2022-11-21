@@ -25,7 +25,7 @@
       </tr>
       <tr v-for="e in events" :key="e.name">
         <td>{{e.name}}</td>
-        <td>{{e.date}}</td>
+        <td>{{e.eventDate}}</td>
         <td>{{e.startTime}}</td>
         <td>{{e.endTime}}</td>
       </tr>
@@ -41,6 +41,18 @@
 </template>
 
 <script>
+import axios from 'axios'
+const config = require('../../config')
+
+const frontendUrl = config.dev.host + ':' + config.dev.port
+const axiosClient = axios.create({
+  // Note the baseURL, not baseUrl
+  baseURL: config.dev.backendBaseUrl,
+  headers: { 'Access-Control-Allow-Origin': frontendUrl }
+})
+
+console.log(config.dev.backendBaseUrl)
+
 export default {
   name: 'Home',
   data() {
@@ -56,9 +68,26 @@ export default {
     }
   },
   created() {
-    this.users.push({ id: 1, name: 'Alice' })
-    this.users.push({ id: 2, name: 'Bob' })
-    this.nextId = 3
+    axiosClient.get('/person')
+    .then(response => {
+      console.log(response)
+      this.users = response.data.persons
+    })
+    .catch(e => {
+      console.log('Error in GET /person:')
+      console.log(e)
+    })
+
+    axiosClient.get('/event')
+    .then(response => {
+      console.log(response)
+      this.events = response.data.events
+      this.nextId = response.data.events.length
+    })
+    .catch(e => {
+      console.log('Error in GET /event:')
+      console.log(e)
+    })
   },
   methods: {
     createUser: function(userName) {
@@ -68,7 +97,7 @@ export default {
       this.newUserName = ''
     },
     createEvent: function(eventName, date, startTime, endTime) {
-      const e = { name: eventName, date: date, startTime: startTime, endTime: endTime }
+      const e = { name: eventName, eventDate: date, startTime: startTime, endTime: endTime }
       this.events.push(e)
       this.newEventName = ''
       this.newEventDate = ''
