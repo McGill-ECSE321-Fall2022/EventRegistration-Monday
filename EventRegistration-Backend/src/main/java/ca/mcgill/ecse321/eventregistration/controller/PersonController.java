@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import ca.mcgill.ecse321.eventregistration.dto.MultiplePersonResponseDto;
 import ca.mcgill.ecse321.eventregistration.dto.PersonRequestDto;
 import ca.mcgill.ecse321.eventregistration.dto.PersonResponseDto;
 import ca.mcgill.ecse321.eventregistration.model.Person;
@@ -26,6 +27,13 @@ public class PersonController {
 	public ResponseEntity<PersonResponseDto> getPersonById(@PathVariable int id) {
 		Person person = personService.getPersonById(id);
 		return new ResponseEntity<PersonResponseDto>(new PersonResponseDto(person), HttpStatus.OK);
+	}
+	
+	@GetMapping("/person")
+	public ResponseEntity<MultiplePersonResponseDto> getAllPersons() {
+		Iterable<Person> persons = personService.getAllPersons();
+		MultiplePersonResponseDto response = new MultiplePersonResponseDto(persons);
+		return new ResponseEntity<MultiplePersonResponseDto>(response, HttpStatus.OK);
 	}
 
 	@PostMapping("/person")

@@ -25,6 +25,11 @@ public class PersonService {
 	}
 	
 	@Transactional
+	public Iterable<Person> getAllPersons() {
+		return personRepo.findAll();
+	}
+	
+	@Transactional
 	public Person createPerson(Person person) {
 		person = personRepo.save(person);
 		return person;

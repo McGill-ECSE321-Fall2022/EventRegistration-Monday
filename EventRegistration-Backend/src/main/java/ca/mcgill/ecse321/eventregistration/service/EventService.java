@@ -23,6 +23,11 @@ public class EventService {
 		}
 		return event;
 	}
+	
+	@Transactional
+	public Iterable<Event> getAllEvents() {
+		return eventRepo.findAll();
+	}
 
 	@Transactional
 	public Event createEvent(Event event) {
