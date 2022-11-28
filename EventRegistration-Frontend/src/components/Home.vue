@@ -1,6 +1,20 @@
 <template>
   <div>
     <h1>Event registration</h1>
+    <router-link :to="{name:'Hello'}">Hello Page</router-link>
+    <!--
+      Alternatively, specify the page URL:
+      <router-link to="/hello">Hello Page</router-link>
+
+      Or navigate with JavaScript (use this.$router instead of $router if you put this in your script section):
+      <button @click="$router.push({name: 'Hello'})">Hello Page</button>
+
+      Or navigate with JavaScript and do NOT let the user go back:
+      <button @click="$router.replace({name: 'Hello'})">Hello Page</button>
+
+      Or use a raw <a> tag (not recommended):
+      <a href="/#/hello">Hello Page</a>
+    -->
     <p>Welcome to the event registration app!</p>
     <h2>Users</h2>
     <table>
