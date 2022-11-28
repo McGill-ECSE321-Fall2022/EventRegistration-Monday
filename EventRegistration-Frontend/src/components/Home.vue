@@ -26,7 +26,7 @@
       </tr>
       <tr>
         <td><input type="text" placeholder="Name" v-model="newUserName"></td>
-        <td><button v-bind:disabled="!newUserName.trim()" @click="createUser(newUserName)">Create</button></td>
+        <td><b-button variant="primary" v-bind:disabled="!newUserName.trim()" @click="createUser(newUserName)">Create</b-button></td>
       </tr>
     </table>
     <h2>Events</h2>
@@ -48,7 +48,7 @@
         <td><input type="text" placeholder="Date" v-model="newEventDate"></td>
         <td><input type="text" placeholder="Start time" v-model="newEventStartTime"></td>
         <td><input type="text" placeholder="End time" v-model="newEventEndTime"></td>
-        <td><button v-bind:disabled="eventBtnDisabled" @click="createEvent(newEventName, newEventDate, newEventStartTime, newEventEndTime)">Create</button></td>
+        <td><b-button v-bind:disabled="eventBtnDisabled" @click="createEvent(newEventName, newEventDate, newEventStartTime, newEventEndTime)">Create</b-button></td>
       </tr>
     </table>
   </div>
@@ -144,5 +144,14 @@ export default {
 </script>
 
 <style>
-
+.btn-primary:not(disabled) {
+  background-color: green;
+  color: black;
+  border: 5px solid darkgreen;
+}
+.btn-primary:hover {
+  background-color: red;
+  color: black;
+  border: 10px dashed darkred;
+}
 </style>
